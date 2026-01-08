@@ -1,0 +1,192 @@
+/* ==========================================================================
+    Modern CSS Reset
+   ========================================================================== */
+
+/* 1. 使用更直观的盒模型 */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. 移除默认边距 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. 根元素设置 */
+html {
+    /* 62.5% of 16px = 10px */
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+}
+
+/* 4. 核心 body 默认值 */
+body {
+    font-size: 1.6rem;
+    /* 16px */
+    line-height: 1.6;
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    overflow-x: hidden;
+}
+
+/* 5. 媒体元素设置 */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 6. 继承表单控件的字体 */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+/* 7. 避免文本溢出 */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 8. 减少标题的行高 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+}
+
+/* 9. 创建根堆叠上下文 */
+#app,
+#__next {
+    isolation: isolate;
+}
+
+/* 10. 移除列表样式 */
+ol,
+ul {
+    list-style: none;
+}
+
+/* 11. 引用元素 */
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+/* 12. 表格重置 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 13. 链接样式重置 */
+a {
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 14. 按钮重置 */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* 15. 输入框重置 */
+input,
+textarea {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+/* 16. 选择文本颜色 */
+::selection {
+    background-color: #b3d4fc;
+    color: #000000;
+    text-shadow: none;
+}
+
+/* 17. 焦点样式 */
+:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 18. 减少运动用户的动画 */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* 19. 滚动条样式（现代浏览器） */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 20. 隐藏属性 */
+[hidden] {
+    display: none !important;
+}
+
+/* 21. 禁用状态 */
+[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
