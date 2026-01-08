@@ -1,0 +1,1106 @@
+{
+    "menuItems": [
+        {
+            "icon": "https://img14.360buyimg.com/imagetools/jfs/t1/95664/15/40921/296/66d13f7cF7ed5ab7d/bd4d68f33a69c7dc.png",
+            "parent_id ": "1",
+            "links": [
+                {
+                    "sub_name": "家用电器",
+                    "sub_tit": "1-1"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "电视",
+                    "sub_tit": "1-1",
+                    "sons_id": "11",
+                    "subItems": [
+                        {
+                            "name": "游戏电视",
+                            "grandson_id": "1110"
+                        },
+                        {
+                            "name": "艺术电视",
+                            "grandson_id": "1120"
+                        },
+                        {
+                            "name": "K歌电视",
+                            "grandson_id": "1130"
+                        },
+                        {
+                            "name": "miniled电视",
+                            "grandson_id": "1140"
+                        },
+                        {
+                            "name": "会议电视",
+                            "grandson_id": "1150"
+                        },
+                        {
+                            "name": "电视音响套装",
+                            "grandson_id": "1160"
+                        },
+                        {
+                            "name": "会议平板一体机",
+                            "grandson_id": "1170"
+                        },
+                        {
+                            "name": "75寸电视",
+                            "grandson_id": "1180"
+                        },
+                        {
+                            "name": "85寸电视",
+                            "grandson_id": "1190"
+                        },
+                        {
+                            "name": "98寸电视",
+                            "grandson_id": "1110"
+                        },
+                        {
+                            "name": "100寸电视",
+                            "grandson_id": "1111"
+                        },
+                        {
+                            "name": "电视挂架",
+                            "grandson_id": "1112"
+                        },
+                        {
+                            "name": "电视遥控器",
+                            "grandson_id": "1113"
+                        },
+                        {
+                            "name": "电视推车",
+                            "grandson_id": "1114"
+                        },
+                        {
+                            "name": "触控电视",
+                            "grandson_id": "1115"
+                        },
+                        {
+                            "name": "门店电视",
+                            "grandson_id": "1116"
+                        },
+                        {
+                            "name": "酒店电视",
+                            "grandson_id": "1117"
+                        },
+                        {
+                            "name": "会议平板一体机",
+                            "grandson_id": "1118"
+                        }
+                    ]
+                },
+                {
+                    "title": "空调",
+                    "sub_tit": "1-1",
+                    "sons_id": "12",
+                    "subItems": [
+                        {
+                            "name": "舒适风空调",
+                            "grandson_id": "1210"
+                        },
+                        {
+                            "name": "健康空调",
+                            "grandson_id": "1220"
+                        },
+                        {
+                            "name": "挂机空调",
+                            "grandson_id": "1230"
+                        },
+                        {
+                            "name": "柜机空调",
+                            "grandson_id": "1240"
+                        },
+                        {
+                            "name": "空调套装",
+                            "grandson_id": "1250"
+                        }
+                    ]
+                },
+                {
+                    "title": "中央空调",
+                    "sub_tit": "1-1",
+                    "sons_id": "13",
+                    "subItems": [
+                        {
+                            "name": "风管机",
+                            "grandson_id": "1310"
+                        },
+                        {
+                            "name": "多联机",
+                            "grandson_id": "1320"
+                        },
+                        {
+                            "name": "厨房空调",
+                            "grandson_id": "1330"
+                        },
+                        {
+                            "name": "基站空调",
+                            "grandson_id": "1340"
+                        },
+                        {
+                            "name": "空气能地暖空调",
+                            "grandson_id": "1350"
+                        },
+                        {
+                            "name": "天花板吸顶空调",
+                            "grandson_id": "1360"
+                        }
+                    ]
+                },
+                {
+                    "title": "洗衣机",
+                    "sub_tit": "1-1",
+                    "sons_id": "14",
+                    "subItems": [
+                        {
+                            "name": "多滚筒洗衣机",
+                            "grandson_id": "1410"
+                        },
+                        {
+                            "name": "洗烘套装",
+                            "grandson_id": "1420"
+                        },
+                        {
+                            "name": "滚筒洗衣机",
+                            "grandson_id": "1430"
+                        },
+                        {
+                            "name": "洗烘一体机",
+                            "grandson_id": "1440"
+                        },
+                        {
+                            "name": "波轮洗衣机",
+                            "grandson_id": "1450"
+                        }
+                    ]
+                },
+                {
+                    "title": "冰箱",
+                    "sub_tit": "1-1",
+                    "sons_id": "15",
+                    "subItems": [
+                        {
+                            "name": "自动制冰",
+                            "grandson_id": "1510"
+                        },
+                        {
+                            "name": "超薄嵌入",
+                            "grandson_id": "1520"
+                        },
+                        {
+                            "name": "主动除菌",
+                            "grandson_id": "1530"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img10.360buyimg.com/imagetools/jfs/t1/247476/17/17051/251/66d13f7dF795a4306/93894d9675b21bc9.png",
+            "parent_id ": "2",
+            "links": [
+                {
+                    "sub_name": "手机",
+                    "sub_tit": "2-1"
+                },
+                {
+                    "sub_name": "运营商",
+                    "sub_tit": "2-2"
+                },
+                {
+                    "sub_name": "数码",
+                    "sub_tit": "2-3"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "手机通讯",
+                    "sub_tit": "2-1",
+                    "sons_id": "21",
+                    "subItems": [
+                        {
+                            "name": "游戏手机",
+                            "grandson_id": "2110"
+                        },
+                        {
+                            "name": "拍照手机",
+                            "grandson_id": "2120"
+                        },
+                        {
+                            "name": "全面屏手机",
+                            "grandson_id": "2130"
+                        }
+                    ]
+                },
+                {
+                    "title": "运营商",
+                    "sub_tit": "2-2",
+                    "sons_id": "22",
+                    "subItems": [
+                        {
+                            "name": "合约机",
+                            "grandson_id": "2210"
+                        },
+                        {
+                            "name": "手机卡",
+                            "grandson_id": "2220"
+                        },
+                        {
+                            "name": "宽带",
+                            "grandson_id": "2230"
+                        }
+                    ]
+                },
+                {
+                    "title": "手机配件",
+                    "sub_tit": "2-1",
+                    "sons_id": "23",
+                    "subItems": [
+                        {
+                            "name": "手机饰品",
+                            "grandson_id": "2310"
+                        },
+                        {
+                            "name": "移动电源",
+                            "grandson_id": "2320"
+                        },
+                        {
+                            "name": "贴膜",
+                            "grandson_id": "2330"
+                        }
+                    ]
+                },
+                {
+                    "title": "摄影摄像", 
+                    "sub_tit": "2-3",
+                    "sons_id": "24",
+                    "subItems": [
+                        {
+                            "name": "数码相机",
+                            "grandson_id": "2410"
+                        },
+                        {
+                            "name": "微单相机",
+                            "grandson_id": "2420"
+                        },
+                        {
+                            "name": "单反相机",
+                            "grandson_id": "2430"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img12.360buyimg.com/imagetools/jfs/t1/242395/34/16729/259/66d13f7bF0d8cc517/d0b621d6a5d57409.png",
+            "parent_id ": "1a",
+            "links": [
+                
+                
+                {
+                    "sub_name": "电脑",
+                    "sub_tit": "1a-1"
+                },
+                {
+                    "sub_name": "办公",
+                    "sub_tit": "1a-2"
+                },
+                {
+                    "sub_name": "文具用品",
+                    "sub_tit": "1a-3"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "电脑整机",
+                    "sub_tit": "1a-1",
+                    "sons_id": "1a1",
+                    "subItems": [
+                        {
+                            "name": "平板电脑",
+                            "grandson_id": "1a110"
+                        },
+                        {
+                            "name": "笔记本",
+                            "grandson_id": "1a120"
+                        },
+                        {
+                            "name": "游戏本",
+                            "grandson_id": "1a130"
+                        }
+                    ]
+                },
+                {
+                    "title": "电脑配件",
+                    "sub_tit": "1a-1",
+                    "sons_id": "1a2",
+                    "subItems": [
+                        {
+                            "name": "硬盘",
+                            "grandson_id": "1a210"
+                        },
+                        {
+                            "name": "CPU",
+                            "grandson_id": "1a220"
+                        },
+                        {
+                            "name": "显示器",
+                            "grandson_id": "1a230"
+                        }
+                    ]
+                },
+                {
+                    "title": "外设产品",
+                    "sub_tit": "1a-1",
+                    "sons_id": "1a3",
+                    "subItems": [
+                        {
+                            "name": "鼠标",
+                            "grandson_id": "1a310"
+                        },
+                        {
+                            "name": "键盘",
+                            "grandson_id": "1a320"
+                        },
+                        {
+                            "name": "U盘",
+                            "grandson_id": "1a330"
+                        }
+                    ]
+                },
+                {
+                    "title": "游戏设备",
+                    "sub_tit": "1a-1",
+                    "sons_id": "1a4",
+                    "subItems": [
+                        {
+                            "name": "游戏机",
+                            "grandson_id": "1a410"
+                        },
+                        {
+                            "name": "游戏耳机",
+                            "grandson_id": "1a420"
+                        },
+                        {
+                            "name": "手柄/方向盘",
+                            "grandson_id": "1a430"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img11.360buyimg.com/imagetools/jfs/t1/158901/20/47133/355/66d13f7cFe7ae3a25/0241d37642abb9a5.png",
+            "parent_id ": "3",
+            "links": [
+                {
+                    "sub_name": "家居",
+                    "sub_tit": "3-1"
+                },
+                {
+                    "sub_name": "家具",
+                    "sub_tit": "3-2"
+                },
+                {
+                    "sub_name": "家装",
+                    "sub_tit": "3-3"
+                },
+                {
+                    "sub_name": "厨具",
+                    "sub_tit": "3-4"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "厨房电器",
+                    "sub_tit": "3-1",
+                    "sons_id": "31",
+                    "subItems": [
+                        {
+                            "name": "电饭煲",
+                            "grandson_id": "3110"
+                        },
+                        {
+                            "name": "微波炉",
+                            "grandson_id": "3120"
+                        },
+                        {
+                            "name": "电磁炉",
+                            "grandson_id": "3130"
+                        }
+                    ]
+                },
+                {
+                    "title": "生活电器",
+                    "sub_tit": "3-1",
+                    "sons_id": "32",
+                    "subItems": [
+                        {
+                            "name": "空气净化器",
+                            "grandson_id": "3210"
+                        },
+                        {
+                            "name": "加湿器",
+                            "grandson_id": "3220"
+                        },
+                        {
+                            "name": "电风扇",
+                            "grandson_id": "3230"
+                        }
+                    ]
+                },
+                {
+                    "title": "个护健康",
+                    "sub_tit": "3-1",
+                    "sons_id": "33",
+                    "subItems": [
+                        {
+                            "name": "剃须刀",
+                            "grandson_id": "3310"
+                        },
+                        {
+                            "name": "电吹风",
+                            "grandson_id": "3320"
+                        },
+                        {
+                            "name": "按摩器",
+                            "grandson_id": "3330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img13.360buyimg.com/imagetools/jfs/t1/236205/4/26259/315/66d13f7bFa6179f46/01e945d3bae87a8d.png",
+            "parent_id ": "4",
+            "links": [
+                {
+                    "sub_name": "男装",
+                    "sub_tit": "4-1"
+                },
+                {
+                    "sub_name": "女装",
+                    "sub_tit": "4-2"
+                },
+                {
+                    "sub_name": "童装",
+                    "sub_tit": "4-3"
+                },
+                {
+                    "sub_name": "内衣",
+                    "sub_tit": "4-4"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "女装",
+                    "sub_tit": "4-2",
+                    "sons_id": "41",
+                    "subItems": [
+                        {
+                            "name": "连衣裙",
+                            "grandson_id": "4110"
+                        },
+                        {
+                            "name": "T恤",
+                            "grandson_id": "4120"
+                        },
+                        {
+                            "name": "牛仔裤",
+                            "grandson_id": "4130"
+                        }
+                    ]
+                },
+                {
+                    "title": "男装",
+                    "sub_tit": "4-1",
+                    "sons_id": "42",
+                    "subItems": [
+                        {
+                            "name": "衬衫",
+                            "grandson_id": "4210"
+                        },
+                        {
+                            "name": "POLO衫",
+                            "grandson_id": "4220"
+                        },
+                        {
+                            "name": "休闲裤",
+                            "grandson_id": "4230"
+                        }
+                    ]
+                },
+                {
+                    "title": "鞋靴",
+                    "sub_tit": "4-3",
+                    "sons_id": "43",
+                    "subItems": [
+                        {
+                            "name": "运动鞋",
+                            "grandson_id": "4310"
+                        },
+                        {
+                            "name": "休闲鞋",
+                            "grandson_id": "4320"
+                        },
+                        {
+                            "name": "皮鞋",
+                            "grandson_id": "4330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img13.360buyimg.com/imagetools/jfs/t1/78165/1/28972/293/66d13f7bF366459f6/ccc78435369c55f1.png",
+            "parent_id ": "5",
+            "links": [
+                {
+                    "sub_name": "美妆",
+                    "sub_tit": "5-1"
+                },
+                {
+                    "sub_name": "个护清洁",
+                    "sub_tit": "5-2"
+                },
+                {
+                    "sub_name": "宠物",
+                    "sub_tit": "5-3"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "面部护肤",
+                    "sub_tit": "5-2",
+                    "sons_id": "51",
+                    "subItems": [
+                        {
+                            "name": "洁面",
+                            "grandson_id": "5110"
+                        },
+                        {
+                            "name": "爽肤水",
+                            "grandson_id": "5120"
+                        },
+                        {
+                            "name": "面霜",
+                            "grandson_id": "5130"
+                        }
+                    ]
+                },
+                {
+                    "title": "彩妆",
+                    "sub_tit": "5-1",
+                    "sons_id": "52",
+                    "subItems": [
+                        {
+                            "name": "口红",
+                            "grandson_id": "5210"
+                        },
+                        {
+                            "name": "粉底",
+                            "grandson_id": "5220"
+                        },
+                        {
+                            "name": "眼影",
+                            "grandson_id": "5230"
+                        }
+                    ]
+                },
+                {
+                    "title": "香水",
+                    "sub_tit": "5-2",
+                    "sons_id": "53",
+                    "subItems": [
+                        {
+                            "name": "女士香水",
+                            "grandson_id": "5310"
+                        },
+                        {
+                            "name": "男士香水",
+                            "grandson_id": "5320"
+                        },
+                        {
+                            "name": "淡香水",
+                            "grandson_id": "5330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img13.360buyimg.com/imagetools/jfs/t1/57285/32/26773/372/66d13f7dFd5e7f8fa/c97b8634e410fd2f.png",
+            "parent_id ": "6",
+            "links": [
+                {
+                    "sub_name": "女鞋",
+                    "sub_tit": "6-1"
+                },
+                {
+                    "sub_name": "箱包",
+                    "sub_tit": "6-2"
+                },
+                {
+                    "sub_name": "钟表",
+                    "sub_tit": "6-3"
+                },
+                {
+                    "sub_name": "珠宝",
+                    "sub_tit": "6-4"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "时尚女鞋",
+                    "sub_tit": "6-1",
+                    "sons_id": "61",
+                    "subItems": [
+                        {
+                            "name": "女士休闲鞋",
+                            "grandson_id": "6110"
+                        },
+                        {
+                            "name": "高跟鞋",
+                            "grandson_id": "6120"
+                        },
+                        {
+                            "name": "女靴",
+                            "grandson_id": "6130"
+                        }
+                    ]
+                },
+                {
+                    "title": "潮流女包",
+                    "sub_tit": "6-2",
+                    "sons_id": "62",
+                    "subItems": [
+                        {
+                            "name": "手提包",
+                            "grandson_id": "6210"
+                        },
+                        {
+                            "name": "单肩包",
+                            "grandson_id": "6220"
+                        },
+                        {
+                            "name": "双肩包",
+                            "grandson_id": "6230"
+                        }
+                    ]
+                },
+                {
+                    "title": "精选大牌",
+                    "sub_tit": "6-2",
+                    "sons_id": "63",
+                    "subItems": [
+                        {
+                            "name": "GUCCI",
+                            "grandson_id": "6310"
+                        },
+                        {
+                            "name": "COACH",
+                            "grandson_id": "6320"
+                        },
+                        {
+                            "name": "普拉达",
+                            "grandson_id": "6330"
+                        },
+                        {
+                            "name": "万宝龙",
+                            "grandson_id": "6340"
+                        }
+                    ]
+                },
+                {
+                    "title": "钟表",
+                    "sub_tit": "6-3",
+                    "sons_id": "64",
+                    "subItems": [
+                        {
+                            "name": "DW",
+                            "grandson_id": "6410"
+                        },
+                        {
+                            "name": "天梭",
+                            "grandson_id": "6420"
+                        },
+                        {
+                            "name": "浪琴",
+                            "grandson_id": "6430"
+                        },
+                        {
+                            "name": "欧米茄",
+                            "grandson_id": "6440"
+                        },
+                        {
+                            "name": "卡西欧",
+                            "grandson_id": "6450"
+                        },
+                        {
+                            "name": "阿玛尼",
+                            "grandson_id": "6460"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img12.360buyimg.com/imagetools/jfs/t1/132989/18/46173/321/66d13f7dF21b29c8a/0204c8f1aefd017a.png",
+            "parent_id ": "7",
+            "links": [
+                {
+                    "sub_name": "男鞋",
+                    "sub_tit": "7-1"
+                },
+                {
+                    "sub_name": "运动",
+                    "sub_tit": "7-2"
+                },
+                {
+                    "sub_name": "户外",
+                    "sub_tit": "7-3"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "运动鞋服",
+                    "sub_tit": "7-2",
+                    "sons_id": "71",
+                    "subItems": [
+                        {
+                            "name": "跑步鞋",
+                            "grandson_id": "7110"
+                        },
+                        {
+                            "name": "篮球鞋",
+                            "grandson_id": "7120"
+                        },
+                        {
+                            "name": "运动服",
+                            "grandson_id": "7130"
+                        }
+                    ]
+                },
+                {
+                    "title": "健身器材",
+                    "sub_tit": "7-2",
+                    "sons_id": "72",
+                    "subItems": [
+                        {
+                            "name": "跑步机",
+                            "grandson_id": "7210"
+                        },
+                        {
+                            "name": "哑铃",
+                            "grandson_id": "7220"
+                        },
+                        {
+                            "name": "瑜伽垫",
+                            "grandson_id": "7230"
+                        }
+                    ]
+                },
+                {
+                    "title": "户外装备",
+                    "sub_tit": "7-3",
+                    "sons_id": "73",
+                    "subItems": [
+                        {
+                            "name": "帐篷",
+                            "grandson_id": "7310"
+                        },
+                        {
+                            "name": "登山包",
+                            "grandson_id": "7320"
+                        },
+                        {
+                            "name": "睡袋",
+                            "grandson_id": "7330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img10.360buyimg.com/imagetools/jfs/t1/238399/24/22617/307/66d13f7bFe05d9a35/b7f1e233a982662a.png",
+            "parent_id ": "8",
+            "links": [
+                {
+                    "sub_name": "房产",
+                    "sub_tit": "8-1"
+                },
+                {
+                    "sub_name": "汽车",
+                    "sub_tit": "8-2"
+                },
+                {
+                    "sub_name": "汽车户外",
+                    "sub_tit": "8-3"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "汽车配件",
+                    "sub_tit": "8-2",
+                    "sons_id": "81",
+                    "subItems": [
+                        {
+                            "name": "轮胎",
+                            "grandson_id": "8110"
+                        },
+                        {
+                            "name": "电瓶",
+                            "grandson_id": "8120"
+                        },
+                        {
+                            "name": "滤清器",
+                            "grandson_id": "8130"
+                        }
+                    ]
+                },
+                {
+                    "title": "汽车装饰",
+                    "sub_tit": "8-2",
+                    "sons_id": "82",
+                    "subItems": [
+                        {
+                            "name": "座垫",
+                            "grandson_id": "8210"
+                        },
+                        {
+                            "name": "脚垫",
+                            "grandson_id": "8220"
+                        },
+                        {
+                            "name": "方向盘套",
+                            "grandson_id": "8230"
+                        }
+                    ]
+                },
+                {
+                    "title": "汽车电子",
+                    "sub_tit": "8-2",
+                    "sons_id": "83",
+                    "subItems": [
+                        {
+                            "name": "行车记录仪",
+                            "grandson_id": "8310"
+                        },
+                        {
+                            "name": "车载导航",
+                            "grandson_id": "8320"
+                        },
+                        {
+                            "name": "车载充电器",
+                            "grandson_id": "8330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img10.360buyimg.com/imagetools/jfs/t1/231301/22/25764/350/66d13f7cF939a0236/582b896f1eefdbc8.png",
+            "parent_id ": "9",
+            "links": [
+                {
+                    "sub_name": "母婴",
+                    "sub_tit": "9-1"
+                },
+                {
+                    "sub_name": "玩具乐器",
+                    "sub_tit": "9-2"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "奶粉",
+                    "sub_tit": "9-1",
+                    "sons_id": "91",
+                    "subItems": [
+                        {
+                            "name": "婴儿奶粉",
+                            "grandson_id": "9110"
+                        },
+                        {
+                            "name": "幼儿奶粉",
+                            "grandson_id": "9120"
+                        },
+                        {
+                            "name": "成人奶粉",
+                            "grandson_id": "9130"
+                        }
+                    ]
+                },
+                {
+                    "title": "玩具",
+                    "sub_tit": "9-2",
+                    "sons_id": "92",
+                    "subItems": [
+                        {
+                            "name": "积木",
+                            "grandson_id": "9210"
+                        },
+                        {
+                            "name": "毛绒玩具",
+                            "grandson_id": "9220"
+                        },
+                        {
+                            "name": "电动玩具",
+                            "grandson_id": "9230"
+                        }
+                    ]
+                },
+                {
+                    "title": "童装",
+                    "sub_tit": "9-2",
+                    "sons_id": "93",
+                    "subItems": [
+                        {
+                            "name": "童装套装",
+                            "grandson_id": "9310"
+                        },
+                        {
+                            "name": "童鞋",
+                            "grandson_id": "9320"
+                        },
+                        {
+                            "name": "婴儿服饰",
+                            "grandson_id": "9330"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "icon": "https://img12.360buyimg.com/imagetools/jfs/t1/90075/15/45774/323/66d13f7dF22e7951a/45d57a26b924d416.png",
+            "parent_id ": "1b",
+            "links": [
+                {
+                    "sub_name": "食品",
+                    "sub_tit": "1b-1"
+                },
+                {
+                    "sub_name": "酒类",
+                    "sub_tit": "1b-2"
+                },
+                {
+                    "sub_name": "生鲜",
+                    "sub_tit": "1b-3"
+                },
+                {
+                    "sub_name": "特产",
+                    "sub_tit": "1b-4"
+                }
+            ],
+            "categories": [
+                {
+                    "title": "水果",
+                    "sub_tit": "1b-1",
+                    "sons_id": "1b1",
+                    "subItems": [
+                        {
+                            "name": "苹果",
+                            "grandson_id": "1b110"
+                        },
+                        {
+                            "name": "橙子",
+                            "grandson_id": "1b120"
+                        },
+                        {
+                            "name": "香蕉",
+                            "grandson_id": "1b130"
+                        }
+                    ]
+                },
+                {
+                    "title": "肉类",
+                    "sub_tit": "1b-1",
+                    "sons_id": "1b2",
+                    "subItems": [
+                        {
+                            "name": "牛肉",
+                            "grandson_id": "1b210"
+                        },
+                        {
+                            "name": "猪肉",
+                            "grandson_id": "1b220"
+                        },
+                        {
+                            "name": "鸡肉",
+                            "grandson_id": "1b230"
+                        }
+                    ]
+                },
+                {
+                    "title": "酒水",
+                    "sub_tit": "1b-2",
+                    "sons_id": "1b3",
+                    "subItems": [
+                        {
+                            "name": "白酒",
+                            "grandson_id": "1b310"
+                        },
+                        {
+                            "name": "红酒",
+                            "grandson_id": "1b320"
+                        },
+                        {
+                            "name": "啤酒",
+                            "grandson_id": "1b330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "carouselDta": [
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_trendy_clothing.png",
+            "titleTop": "潮流穿搭新势力",
+            "titleMiddle": "解锁时尚新趋势",
+            "titleSubtitle": "潮服好价 新品折扣"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_snacks.png",
+            "titleTop": "办公轻补给",
+            "titleMiddle": "宅家追剧能量站",
+            "titleSubtitle": "精选好物 超值优惠"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_home_appliances.png",
+            "titleTop": "智享生活焕新季",
+            "titleMiddle": "家电狂欢省到底",
+            "titleSubtitle": "爆品直降 限时抢购"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_cell_phone.png",
+            "titleTop": "手机焕新季",
+            "titleMiddle": "正品旗舰放心购",
+            "titleSubtitle": "官方正品 限时直降"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_digital_equipment.png",
+            "titleTop": "潮玩黑科技",
+            "titleMiddle": "数码3C狂欢盛典",
+            "titleSubtitle": "官方正品 即刻开抢"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_home_decoration.png",
+            "titleTop": "大牌家具家装",
+            "titleMiddle": "点缀品质生活",
+            "titleSubtitle": "正品直降 省钱省心"
+        },
+        {
+            "add": "https://storage.360buyimg.com/component-libray/images/pc/pc_banner_home_decoration.png",
+            "titleTop": "大牌家具家装",
+            "titleMiddle": "点缀品质生活",
+            "titleSubtitle": "正品直降 省钱省心"
+        }
+    ],
+    "bannerRt": [
+        "https://storage.360buyimg.com/component-libray/images/pc/pc_theme_state_subsidies.png",
+        "https://storage.360buyimg.com/component-libray/images/pc/pc_theme_beauty.png",
+        "https://storage.360buyimg.com/component-libray/images/pc/pc_theme_daily_necessities.png",
+        "https://storage.360buyimg.com/component-libray/images/pc/pc_theme_hardware_tools.png"
+    ]
+}

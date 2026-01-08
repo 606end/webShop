@@ -1,0 +1,35 @@
+{
+    "name": "api-proxy-server",
+    "version": "1.0.0",
+    "description": "本地API代理和Mock服务器",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon server.js",
+        "proxy": "node proxy-server.js",
+        "mock": "node mock-server.js",
+        "pm2:start": "pm2 start server.js --name api-server",
+        "pm2:stop": "pm2 stop api-server",
+        "pm2:restart": "pm2 restart api-server"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "cors": "^2.8.5",
+        "http-proxy-middleware": "^2.0.6",
+        "axios": "^1.5.0",
+        "body-parser": "^1.20.2",
+        "morgan": "^1.10.0",
+        "helmet": "^7.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1",
+        "pm2": "^5.3.0"
+    },
+    "keywords": [
+        "api",
+        "proxy",
+        "mock",
+        "server"
+    ],
+    "author": "SEA.L.J",
+    "license": "MIT"
+}

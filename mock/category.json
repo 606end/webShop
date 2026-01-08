@@ -1,0 +1,118 @@
+{
+    "//": "🏷️ 分类Mock数据文件 - 用于存储商品分类数据",
+    "//": "✏️ 修改：根据实际分类结构调整",
+    "code": 200,
+    "message": "success",
+    "data": [
+        {
+            "id": 1,
+            "name": "手机数码",
+            "parentId": 0,
+            "level": 1,
+            "sort": 1,
+            "icon": "icon-phone",
+            "image": "category-phone.jpg",
+            "keywords": [
+                "手机",
+                "数码",
+                "电子产品"
+            ],
+            "description": "手机、数码配件、智能设备",
+            "children": [
+                {
+                    "id": 11,
+                    "name": "手机通讯",
+                    "parentId": 1,
+                    "level": 2,
+                    "sort": 1,
+                    "children": [
+                        {
+                            "id": 111,
+                            "name": "智能手机",
+                            "parentId": 11,
+                            "level": 3,
+                            "sort": 1
+                        },
+                        {
+                            "id": 112,
+                            "name": "老人手机",
+                            "parentId": 11,
+                            "level": 3,
+                            "sort": 2
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "name": "手机配件",
+                    "parentId": 1,
+                    "level": 2,
+                    "sort": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "电脑办公",
+            "parentId": 0,
+            "level": 1,
+            "sort": 2,
+            "icon": "icon-computer",
+            "image": "category-computer.jpg",
+            "keywords": [
+                "电脑",
+                "办公",
+                "外设"
+            ],
+            "description": "电脑整机、办公设备、外设产品",
+            "children": [
+                {
+                    "id": 21,
+                    "name": "电脑整机",
+                    "parentId": 2,
+                    "level": 2,
+                    "sort": 1
+                },
+                {
+                    "id": 22,
+                    "name": "电脑配件",
+                    "parentId": 2,
+                    "level": 2,
+                    "sort": 2
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "家用电器",
+            "parentId": 0,
+            "level": 1,
+            "sort": 3,
+            "icon": "icon-appliance",
+            "image": "category-appliance.jpg",
+            "keywords": [
+                "家电",
+                "电器",
+                "家居"
+            ],
+            "description": "大家电、厨房电器、生活电器",
+            "children": [
+                {
+                    "id": 31,
+                    "name": "大家电",
+                    "parentId": 3,
+                    "level": 2,
+                    "sort": 1
+                },
+                {
+                    "id": 32,
+                    "name": "厨房电器",
+                    "parentId": 3,
+                    "level": 2,
+                    "sort": 2
+                }
+            ]
+        }
+    ],
+    "timestamp": "2024-01-15T10:30:00.000Z"
+}
