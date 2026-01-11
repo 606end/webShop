@@ -2,7 +2,7 @@
  * @Author: cc19530632908@163.com cc19530632908@163.com
  * @Date: 2025-11-03 16:20:42
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-08 15:41:54
+ * @LastEditTime: 2026-01-11 12:59:11
  * @FilePath: \app\src\pages\search\search.vue
  * @Description: 
  * 
@@ -261,6 +261,17 @@ export default {
         }
       }
     },
+    '$route.query': {
+      deep: true,
+      immediate: true,
+      async handler(newQuery) {
+        if (newQuery.level) {
+          await this.performCategory(newQuery)
+        } else {
+          await this.performSearch(newQuery.keyword || '')
+        }
+      }
+    },
   },
 
   methods: {
@@ -308,33 +319,48 @@ export default {
     },
 
     handleBreadcrumbClick(item, index) {
-      if (index === this.breadcrumbInfo.length - 1) {
-        return;
-      } else if (index === 0) {
-        this.$store.commit('searchModule/RESET_CATEGORY_INFOS', []);
-        // 这里需要对面包屑数据进行重置，避免在点击全部商品后 数据还留存，这里使用Vuex进行修改，也可使用watch进行变化监听，在当前函数内部进行改变watch修改，还可以通过SetTimeOut延迟修改。
-        // 使用数据修改进行的判断的条件 我放在了computed中
-        const clickDetails = {
+      if (index === this.breadcrumbInfo.length - 1) return;
+      const clickDetails = index === 0
+        ? {
           keyword: '',
           enc: 'utf-8',
           spm: 'a.0.0',
           wq: '',
           pvid: 'e853c1ed79e94a5e8137cbcdec1f6feb'
         }
-        this.$router.push({ name: 'searchPage', params: {}, query: { ...clickDetails } })// 清除所有 params
-        this.performSearch('');// 执行空搜索
-        console.log(this.$route)
-      } else {
-        const clickDetails = {
+        : {
           level: item.type,
           dataClassification: item.data.id,
-          keyword: item.data.name
-        }
-        this.performCategory(clickDetails)
+          categoryName: item.data.name
+        };
+
+      if (index === 0) {
+        this.$store.commit('searchModule/RESET_CATEGORY_INFOS', []);
+        // 这里需要对面包屑数据进行重置，避免在点击全部商品后 数据还留存，这里使用Vuex进行修改，也可使用watch进行变化监听，在当前函数内部进行改变watch修改，还可以通过SetTimeOut延迟修改。
+        // 使用数据修改进行的判断的条件 我放在了computed中
+        // const clickDetails = {
+        //   keyword: '',
+        //   enc: 'utf-8',
+        //   spm: 'a.0.0',
+        //   wq: '',
+        //   pvid: 'e853c1ed79e94a5e8137cbcdec1f6feb'
+        // }
+        this.$router.replace({ name: 'searchPage', params: {}, query: { ...clickDetails } })// 清除所有 params
+        // this.performSearch('');// 执行空搜索
+        console.log(this.$route)
+      } else {
+        // const clickDetails = {
+        //   level: item.type,
+        //   dataClassification: item.data.id,
+        //   keyword: item.data.name
+        // }
+        // this.performCategory(clickDetails)
+        this.$router.replace({ name: 'searchPage', params: {categoryName: clickDetails.categoryName}, query: { ...clickDetails } })
       }
 
     },
 
+    // 适用a标签的动态链接生成函数
     generateUrl(item, index) {
       if (index > 0) {
         const categoryName = encodeURIComponent(item.data.name || '');
