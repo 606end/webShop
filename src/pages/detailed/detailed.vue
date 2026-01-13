@@ -2,7 +2,7 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-11 13:36:24
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-13 18:37:28
+ * @LastEditTime: 2026-01-13 23:21:40
  * @FilePath: \app\src\pages\detailed\detailed.vue
  * @Description: 
  * 
@@ -10,6 +10,7 @@
 -->
 <template>
     <div class="DetailedPage">
+
         <div class="shortcut">
             <div class="top-bar">
                 <div class="top-bar-wrapper">
@@ -26,7 +27,7 @@
                                 <a class="logo-icon" target="_blank" href="#">中国大陆版 - 陕西</a>
                                 <span class="iconfont"></span>
                             </div>
-                            
+
                         </li>
                         <li class="spacer"></li>
                         <li id="ttbar-login-2024" class="shortcut_btn fore1 dropdown shortcut_userico3">
@@ -97,6 +98,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="crumb-wrap" id="crumb-wrap">
+            <div class="w">
+                <div class="crumb clearfix">
+                    <div class="item first">
+                        <a href="#" clstag="shangpin|keycount|product|mbNav-1">家用电器</a>
+                    </div>
+                    <div class="item sep">&gt;</div>
+
+                    <div class="item">
+                        <a href="#" clstag="shangpin|keycount|product|mbNav-2">厨卫大电</a>
+                    </div>
+                    <div class="item sep">&gt;</div>
+
+                    <div class="item">
+                        <a href="#" clstag="shangpin|keycount|product|mbNav-3">电热水器</a>
+                    </div>
+                    <div class="item sep">&gt;</div>
+
+                    <div class="item">
+                        <a href="#" clstag="shangpin|keycount|product|mbNav-4">即热式电热水器</a>
+                    </div>
+                    <div class="item sep">&gt;</div>
+
+                    <div class="item">
+                        <a href="#" clstag="shangpin|keycount|product|mbNav-5">飞利浦（PHILIPS）</a>
+                    </div>
+                    <div class="item sep">&gt;</div>
+
+                    <div class="item ellipsis" title="飞利浦AWH1028/93(85HB)">飞利浦AWH1028/93(85HB)</div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -108,13 +142,85 @@ export default {
 </script>
 
 <style scoped>
-.usericonfont{
-    position: absolute;
-        right: 6px;
-        top: 12px;
+.ellipsis{
+    width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.nickname{
+.crumb a {
+    color: #505259;
+}
+
+.crumb .item {
+    color: #505259;
+    float: left;
+}
+
+.crumb .sep{
+    font-family: simsun;
+    padding: 0 10px;
+}
+
+.crumb{
+    height: 14px;
+    line-height: 14px;
+    padding: 16px 0 20px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: unset;
+}
+
+/* 默认样式 */
+.w {
+    margin: 0 auto;
+}
+
+/* 大于等于1680px的屏幕 */
+@media screen and (min-width: 1680px) {
+    .w {
+        width: 1600px;
+        /* 1680 - 136.4*2 = 1407.2 ≈ 1408px */
+    }
+}
+
+/* 小于1680px的屏幕（最大1679px） */
+@media screen and (max-width: 1679px) {
+    .w {
+        width: 1200px;
+        /* 1679 - 136.4*2 = 1406.2，但京东设置1200px */
+    }
+}
+
+/* 更小屏幕的适配 */
+@media screen and (max-width: 1366px) {
+    .w {
+        width: 1100px;
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .w {
+        width: 100%;
+        padding: 0 15px;
+    }
+}
+
+.crumb-wrap{
+    background: #f6f7fb;
+    margin-top: -24px;
+    position: relative;
+}
+
+.usericonfont {
+    position: absolute;
+    right: 6px;
+    top: 12px;
+}
+
+.nickname {
     display: block;
     max-width: 70px;
     overflow: hidden;
@@ -125,7 +231,7 @@ export default {
     margin-right: 50px;
 }
 
-.shortcut_userico_ico{
+.shortcut_userico_ico {
     display: block;
     width: 40px;
     height: 16px;
@@ -137,7 +243,7 @@ export default {
     background-size: 40px 16px;
 }
 
-li.spacer{
+li.spacer {
     width: .5px;
     height: 8px;
     margin: 14px 2px 0;
@@ -183,7 +289,7 @@ svg {
     line-height: 36px;
     padding-left: 6px;
     padding-right: 6px;
-    position: relative ;
+    position: relative;
 }
 
 .fr {
