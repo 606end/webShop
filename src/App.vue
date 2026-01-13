@@ -1,8 +1,8 @@
 <!--
  * @Author: cc19530632908@163.com cc19530632908@163.com
  * @Date: 2025-11-01 11:50:18
- * @LastEditors: Sam cc19530632908@163.com
- * @LastEditTime: 2025-12-25 15:52:42
+ * @LastEditors: 606end 90855326+606end@users.noreply.github.com
+ * @LastEditTime: 2026-01-11 17:29:10
  * @FilePath: \app\src\App.vue
  * @Description: 
  * 
@@ -10,7 +10,7 @@
 -->
 <template>
   <div id="app" :style="appStyle">
-    <topBar />
+    <topBar v-show="$route.meta.coll" />
     <!-- 路由组件出口的地方 -->
     <router-view class="router_component" />
     <!-- 在home、search显示，在登录、注册隐藏 -->
@@ -30,9 +30,9 @@ export default {
     footerBar
   },
   data() {
-    return {
-      scale: 1
-    }
+  return {
+    scale: 1
+  }
   },
   computed: {
     appStyle() {
