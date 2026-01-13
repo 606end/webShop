@@ -20,6 +20,7 @@ import Register from '@/pages/register/register.vue';
 import Home from '@/pages/home/home.vue';
 import Search from '@/pages/search/search.vue';
 import Login from '@/pages/login/login.vue';
+import Detailed from '@/pages/detailed/detailed.vue';
 // 先把VueRouter原型对象的push先保存一份
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -47,13 +48,19 @@ export default new VueRouter({
             path: '/home',
             name: 'homePage',
             component: Home,
-            meta: { show: true }
+            meta: { 
+                show: true ,
+                coll: true
+            }
         },
         {
             path: '/Product/Search',
             name: 'searchPage',
             component: Search,
-            meta: { show: true },
+            meta: {
+                show: true,
+                coll: true 
+            },
             // 路由组件传递props数据
             // 1：布尔值写法：params
             // props: true,
@@ -68,13 +75,28 @@ export default new VueRouter({
             path: '/login',
             name: 'loginPage',
             component: Login,
-            meta: { show: false }
+            meta: {
+                show: false,
+                coll: true
+}
         },
         {
             path: '/register',
             name: 'registerPage',
             component: Register,
-            meta: { show: false }
+            meta: {
+                show: false,
+                coll: true
+}
+        },
+        {
+            path: '/detailed',
+            name: 'detailedPage',
+            component: Detailed,
+            meta: {
+                show: true,
+                coll: false
+            }
         },
         //重定向，在项目跑起来的时候，访问/ 立马定向到首页
         {
