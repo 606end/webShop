@@ -2,8 +2,8 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-11 13:36:24
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-25 17:30:19
- * @FilePath: \app\src\pages\detailed\detailed.vue
+ * @LastEditTime: 2026-01-27 23:27:52
+ * @FilePath: \app\src\pages\detailed.vue
  * @Description: 
  * 
  * Copyright (c) 2026 by Sea.H.J,, All Rights Reserved. 
@@ -4277,7 +4277,7 @@ export default {
     margin-left: 8px;
 }
 
-.f1 {
+.fl {
     color: #888b94;
     float: left;
 }

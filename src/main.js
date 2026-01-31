@@ -1,12 +1,12 @@
 /*
- * @Author: cc19530632908@163.com cc19530632908@163.com
- * @Date: 2025-11-01 11:50:18
- * @LastEditors: cc19530632908@163.com cc19530632908@163.com
- * @LastEditTime: 2025-12-12 16:51:32
- * @FilePath: \app\src\main.js
+ * @Author: 606end 90855326+606end@users.noreply.github.com
+ * @Date: 2026-01-08 16:43:38
+ * @LastEditors: 606end 90855326+606end@users.noreply.github.com
+ * @LastEditTime: 2026-01-26 15:00:16
+ * @FilePath: \app\src\main\main.js
  * @Description: 
  * 
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+ * Copyright (c) 2026 by Sea.H.J,, All Rights Reserved. 
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -14,7 +14,7 @@ import App from './App.vue'
 import router from './router';
 
 // 引入三级联动全局组件
-import CateMenu from './pages/home/CateMenu/CateMenu.vue';
+import CateMenu from '@/pages/home/CateMenu/CateMenu.vue';
 
 // 第一个参数：全局组件的名字 第二个参数：哪一个组件
 Vue.component ( CateMenu.name, CateMenu);

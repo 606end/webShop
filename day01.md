@@ -1,16 +1,6 @@
 <!--
  * @Author: cc19530632908@163.com cc19530632908@163.com
  * @Date: 2025-11-01 19:58:07
- * @LastEditors: Sam cc19530632908@163.com
- * @LastEditTime: 2025-12-30 22:16:08
- * @FilePath: \app\day01.md
- * @Description: 
- * 
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
--->
-<!--
- * @Author: cc19530632908@163.com cc19530632908@163.com
- * @Date: 2025-11-01 19:58:07
  * @LastEditors: cc19530632908@163.com cc19530632908@163.com
  * @LastEditTime: 2025-11-01 20:20:08
  * @FilePath: \breakVue2.0\app\day01.md
@@ -383,3 +373,43 @@ methods: {
     };
   }
 }
+
+Vue项目多页配置原理并分别设置为不同端口的
+
+优点：
+隔离性好: 每个应用完全独立
+
+按需构建: 只构建需要的应用，速度快
+
+自定义配置: 不同应用可以使用不同端口、不同模板
+
+缺点：
+不能同时运行: 需要两个终端分别运行两个应用
+
+资源不共享: 公共依赖会被重复打包
+
+开发体验: 需要切换不同端口访问不同应用
+
+适用场景：
+两个完全独立的应用
+
+需要分开部署的项目
+
+技术栈不同的子应用
+
+package.json
+"serve:main": "cross-env APP_NAME=main vue-cli-service serve --port 8080",
+"serve:detailedpage": "cross-env APP_NAME=detailedpage vue-cli-service serve --port 7100",
+
+    // 结构: cross-env APP_NAME=应用名称 vue-cli-service serve --port 端口号 cross-env: 跨平台设置环境变量的工具
+    // cross-env APP_NAME=main → 设置环境变量 APP_NAME 为 'main' 
+    // * 启动Vue CLI开发服务器 * 指定端口为8080 
+    // * Vue CLI读取process.env.APP_NAME("main")根据APP_NAME 选择pages.main配置 来确定使用哪个配置项
+    // * 启动 src/main/main.js
+
+    // "build:main": "cross-env APP_NAME=main vue-cli-service build --dest dist/main",
+    // "build:detailedpage": "cross-env APP_NAME=detailedpage vue-cli-service build --dest dist/detailedpage"
+
+vue.config.js
+具体配置已在当前项目中
+项目目录中src下需要将两个独立应用放在不同文件夹
