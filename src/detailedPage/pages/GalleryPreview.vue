@@ -2,9 +2,9 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-27 21:50:38
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-31 18:40:47
+ * @LastEditTime: 2026-02-04 20:46:18
  * @FilePath: \app\src\detailedPage\pages\GalleryPreview.vue
- * @Description: 
+ * @Description: 优化放大镜初始化、标记框跟随鼠标判断逻辑，全面提升组件性能
  * 
  * Copyright (c) 2026 by Sea.H.J,, All Rights Reserved. 
 -->
@@ -61,7 +61,7 @@
         <div class="centre">
           <div class="image-area">
             <div class="image-zoom-container main-img" @mousemove="handleMousemove" @mouseenter="handleMouseenter"
-              @mouseleave="handleMouseleave" ref="mianImage">
+              @mouseleave="handleMouseleave" ref="mainImage">
               <img class="zoom-img" id="spec-img" :src="currentImage">
             </div>
             <div class="magnifier-area" v-show="showMagnifier">
@@ -97,17 +97,25 @@ export default {
       scale: 2,
 
       // 放大窗口尺寸
-      previewWidth: 400,
-      previewHeight: 400,
+      previewWidth: 594,
+      previewHeight: 594,
 
       // 图片容器信息
       containerRect: { width: 0, height: 0 },
-      markRect: { width: 442, height: 442 }
+      markRect: { width: 297, height: 297 },
+
+      // 添加缓存和标志位
+      markSizeInitialized: false,
+      containerSizeInitialized: false,
+      imgLoaded: false, // 添加图片加载状态
+      isComponentDestroyed: false,
     };
   },
   computed: {
     previewStyle() {
-
+      if (!this.containerSizeInitialized) {
+        return {};
+      }
       return {
         width: '100%',
         height: '100%',
@@ -126,8 +134,11 @@ export default {
       return {
         // width: `${markWidth}px`,
         // height: `${markHeight}px`,
-        left: `${this.markfierpos.x}px`,
-        top: `${this.markfierpos.y}px`,
+        // left: `${this.markfierpos.x}px`,
+        // top: `${this.markfierpos.y}px`,
+        // 使用transform触发GPU加速，性能更好。left/top是cpu计算，触发回流/重绘。
+        // transform需要使用绝对定位将元素初始为left/top: 0从左上角开始，否则将跟随父元素定位进行移动
+        transform: `translate( ${this.markfierpos.x}px, ${this.markfierpos.y}px)`
         // position: 'absolute',
         // border: '2px solid #ff0000',
         // boxSizing: 'border-box',
@@ -136,39 +147,81 @@ export default {
     }
   },
   mounted() {
-    this.initContainerSize()
+    /* 在mounted钩子中，图片容器宽高都为0，这说明图片还没有加载完成 需要异步加载优化 */
+    // XXX 1.等待图片加载完成
+    this.waitForImageLoad();
+    // this.initContainerSize()
+
     // this.initMarkSize() // 未渲染，无法获取尺寸。area-mark 在 mounted 时 没有在 DOM 中
-    // 监听窗口变化，重新获取容器尺寸 
+    // 使用 Promise 确保初始化顺序
+    /* Promise.resolve()
+      .then(() => this.initContainerSize())
+      .then(() => {
+        // 延迟初始化标记尺寸，确保 DOM 渲染完成
+        return new Promise(resolve => {
+          this.$nextTick(() => {
+            // this.initMarkSize();
+            resolve();
+          });
+        });
+      });
+    // 监听窗口变化，重新获取容器尺寸 ,使用防抖减少性能开销
+    this.debouncedResize = this.debounce(() => {
+      this.initContainerSize();
+      // this.initMarkSize();
+    }, 200);
+    window.addEventListener('resize', this.debouncedResize); */
     window.addEventListener('resize', this.initContainerSize);
-    window.addEventListener('resize', this.initMarkSize);
+    // window.addEventListener('resize', this.initMarkSize);
   },
   beforeUnmount() {
-    window.removeEventListener('resize', this.initContainerSize);
-    window.removeEventListener('resize', this.initMarkSize);
+    this.isComponentDestroyed = true;
+    window.addEventListener('resize', this.initContainerSize);
+    // window.removeEventListener('resize', this.debouncedResize);
+    //   window.removeEventListener('resize', this.initMarkSize);
   },
   methods: {
+    // 使用防抖函数
+    /* debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }, */
+
     // 初始化容器尺寸
     initContainerSize() {
       // const container = this.$el.querySelector('.image-zoom-container') 避免直接操作DOM
-      const container = this.$refs.mianImage;
+      const container = this.$refs.mainImage;
       if (container) {
         const rect = container.getBoundingClientRect()
+        console.log('rect', rect);
         //获取元素相对于视口的位置和尺寸信息
-        this.containerRect = {
-          width: rect.width,
-          height: rect.height
-          /* left / x：元素左侧到视口左侧的距离
-
-          top / y：元素顶部到视口顶部的距离
-
-          right：元素右侧到视口左侧的距离
-
-          bottom：元素底部到视口顶部的距离
-
-          width：元素宽度
-
-          height：元素高度 */
+        // 只有在尺寸发生变化时才更新，避免不必要的渲染
+        if (rect.width !== this.containerRect.width || rect.height !== this.containerRect.height) {
+          this.containerRect = {
+            width: rect.width,
+            height: rect.height
+            /* left / x：元素左侧到视口左侧的距离
+  
+            top / y：元素顶部到视口顶部的距离
+  
+            right：元素右侧到视口左侧的距离
+  
+            bottom：元素底部到视口顶部的距离
+  
+            width：元素宽度
+  
+            height：元素高度 */
+          }
+          this.containerSizeInitialized = true;
         }
+
 
       }
     },
@@ -179,15 +232,19 @@ export default {
       if (mark) {
         const rectM = mark.getBoundingClientRect();
         console.log('rectM', rectM);
-        this.markRect = {
-          width: rectM.width,
-          height: rectM.height
-        };
+        // 只有在尺寸发生变化时才更新
+        if (rectM.width !== this.markRect.width || rectM.height !== this.markRect.height) {
+          this.markRect = {
+            width: rectM.width,
+            height: rectM.height
+          };
+          this.markSizeInitialized = true;
+        }
       }
     },
 
-    markPosition(markX, markY) {
-      let centerX = 0;
+    markPosition(markX, markY, rect) {
+      /* let centerX = 0;
       let centerY = 0;
       if (markX < this.markRect.width / 2) {
         centerX = 0;
@@ -203,70 +260,175 @@ export default {
         centerY = this.containerRect.height - this.markRect.height;
       } else {
         centerY = markY - this.markRect.height / 2;
+      } */
+      markX = Math.max(0, Math.min(markX, rect.width));
+      markY = Math.max(0, Math.min(markY, rect.height));
+      const { width: markWidth, height: markHeight } = this.markRect;
+      const { width: containerWidth, height: containerHeight } = this.containerRect;
+      // 预计算边界值
+      const halfMarkWidth = markWidth / 2;
+      const halfMarkHeight = markHeight / 2;
+      const maxX = containerWidth - halfMarkWidth;
+      console.log('maxX', maxX);
+      const maxY = containerHeight - halfMarkHeight;
+
+      // 优化计算逻辑 - 使用数学表达式减少条件判断
+      let centerX = markX - halfMarkWidth;
+      let fixedRight = containerWidth - markWidth;
+
+      // 使用 clamp 函数优化边界处理
+      if (centerX < 0) {
+        centerX = 0;
+      } else if (markX > maxX) {
+        centerX = fixedRight;
+      }
+      /* 1. x轴小于标记框X轴一半的宽度，默认靠左 
+         2. x轴大于maxX（框内宽度 - 标记框一般宽度） 默认靠右
+         3. 如果条件都不匹配 则标记框自动跟随鼠标居中*/
+      let centerY = markY - halfMarkHeight;
+      let fixedBottom = containerHeight - markHeight;
+      if (centerY < 0) {
+        centerY = 0;
+      } else if (markY > maxY) {
+        centerY = fixedBottom;
       }
       return { x: centerX, y: centerY };
     },
 
 
     handleMousemove(e) {
-      if (!this.showMagnifier) return;
-      this.$nextTick(() => {
-        this.initMarkSize();
-      });
+      // if (!this.showMagnifier || !this.markSizeInitialized || !this.containerSizeInitialized) return;
+      if (!this.showMagnifier || !this.containerSizeInitialized) {
+        console.warn('放大镜未初始化或容器尺寸为0');
+        return;
+      }
 
-      const container = e.currentTarget;
-      const rect = container.getBoundingClientRect();
-      // 计算鼠标在图片内的相对位置
-      /* event.clientX // 鼠标相对于浏览器视口的X坐标
-        event.clientY // 鼠标相对于浏览器视口的Y坐标
-        event.pageX   // 鼠标相对于文档的X坐标（包含滚动）
-        event.pageY   // 鼠标相对于文档的Y坐标（包含滚动）
-        event.offsetX // 鼠标相对于事件源元素的X坐标
-        event.offsetY // 鼠标相对于事件源元素的Y坐标 */
-      let mouseX = e.clientX - rect.left;
-      let mouseY = e.clientY - rect.top;
+      // 检查容器尺寸是否有效
+      if (this.containerRect.width === 0 || this.containerRect.height === 0) {
+        console.warn('容器尺寸为0，重新初始化');
+        this.initContainerSize();
+        return;
+      }
+      // 使用 requestAnimationFrame 优化性能
+        const container = e.currentTarget;
+        const rect = container.getBoundingClientRect();
+        // 计算鼠标在图片内的相对位置
+        /* event.clientX // 鼠标相对于浏览器视口的X坐标
+          event.clientY // 鼠标相对于浏览器视口的Y坐标
+          event.pageX   // 鼠标相对于文档的X坐标（包含滚动）
+          event.pageY   // 鼠标相对于文档的Y坐标（包含滚动）
+          event.offsetX // 鼠标相对于事件源元素的X坐标
+          event.offsetY // 鼠标相对于事件源元素的Y坐标 */
+        let mouseX = e.clientX - rect.left;
+        let mouseY = e.clientY - rect.top;
 
-      // 边界检查
-      mouseX = Math.max(0, Math.min(mouseX, rect.width));
-      mouseY = Math.max(0, Math.min(mouseY, rect.height));
+        // 边界检查
+        mouseX = Math.max(0, Math.min(mouseX, rect.width));
+        mouseY = Math.max(0, Math.min(mouseY, rect.height));
 
-      let markX = Math.max(0, Math.min(mouseX, rect.width));
-      let markY = Math.max(0, Math.min(mouseY, rect.height));
-      // const centerX = markX - this.markRect.width / 2;
-      // const centerY = markY - this.markRect.height / 2;
-      // 计算标记框位置
-      const { x: centerX, y: centerY } = this.markPosition(markX, markY);
+        // let markX = Math.max(0, Math.min(mouseX, rect.width));
+        // let markY = Math.max(0, Math.min(mouseY, rect.height));
+        // const centerX = markX - this.markRect.width / 2;
+        // const centerY = markY - this.markRect.height / 2;
+        // 计算标记框位置
+        const { x: centerX, y: centerY } = this.markPosition(mouseX, mouseY, rect);
 
-      this.markfierpos = { x: centerX, y: centerY };
-      /* 从内向外解释
-          Math.min(mouseX, rect.width 取mouseX和rect.width中较小的值，防止超出右边界
-            mouseX > rect.width 时，取 rect.width
-            mouseX <= rect.width 时，取 mouseX
-          Math.max(0, ...) 取上一步结果和0中较大的值，防止超出左边界
-            如果上一步结果 < 0 时，取0
-            如果上一步结果 >= 0 时，取上一步结果
-        mouseX 被限制在 [0, rect.width] 范围内
-      */
+        // 只有位置发生变化时才更新
+        if (centerX !== this.markfierpos.x || centerY !== this.markfierpos.y) {this.markfierpos = { x: centerX, y: centerY };}
+        /* 从内向外解释
+            Math.min(mouseX, rect.width 取mouseX和rect.width中较小的值，防止超出右边界
+              mouseX > rect.width 时，取 rect.width
+              mouseX <= rect.width 时，取 mouseX
+            Math.max(0, ...) 取上一步结果和0中较大的值，防止超出左边界
+              如果上一步结果 < 0 时，取0
+              如果上一步结果 >= 0 时，取上一步结果
+          mouseX 被限制在 [0, rect.width] 范围内
+        */
 
-      // 转换为百分比(0-1)
-      const XPercent = mouseX / rect.width;
-      const YPercent = mouseY / rect.height;
-      /* 百分比与容器尺寸无关，是相对值
-         便于在不同尺寸的容器中复用逻辑
-         便于计算放大后的位置 */
+        // 转换为百分比(0-1)
+        // const XPercent = mouseX / rect.width;
+        // const YPercent = mouseY / rect.height;
+        /* 百分比与容器尺寸无关，是相对值
+           便于在不同尺寸的容器中复用逻辑
+           便于计算放大后的位置 */
 
-      // 计算背景图移动位置
-      const bgX = -(XPercent * rect.width * this.scale - this.previewWidth / 2);
-      const bgY = -(YPercent * rect.height * this.scale - this.previewHeight / 2);
+        // 计算背景图移动位置
+        // const bgX = -(XPercent * rect.width * this.scale - this.previewWidth / 2);
+        // const bgY = -(YPercent * rect.height * this.scale - this.previewHeight / 2);
+        
+        // 计算放大镜背景位置
+        // 优化：预计算常用值
+        const invRectWidth = 1 / rect.width;
+        const invRectHeight = 1 / rect.height;
+        const scaledWidth = rect.width * this.scale;
+        const scaledHeight = rect.height * this.scale;
+        const halfPreviewWidth = this.previewWidth / 2;
+        const halfPreviewHeight = this.previewHeight / 2;
 
-      this.magnifierpos = { x: bgX, y: bgY };
+        const XPercent = mouseX * invRectWidth;
+        const YPercent = mouseY * invRectHeight;
+         
+        const bgX = -(XPercent * scaledWidth - halfPreviewWidth);
+        const bgY = -(YPercent * scaledHeight - halfPreviewHeight);
+
+        // 只有位置发生变化时才更新
+        if (bgX !== this.magnifierpos.x || bgY !== this.magnifierpos.y) {
+          this.magnifierpos = { x: bgX, y: bgY };
+        }
+
+        // this.magnifierpos = { x: bgX, y: bgY };
     },
     handleMouseenter() {
       this.showMagnifier = true;
+
+      // 延迟初始化，避免阻塞主线程
+      /* if (!this.markSizeInitialized) {
+        requestAnimationFrame(() => {
+          // this.initMarkSize();
+        });
+      } */ 
     },
     handleMouseleave() {
       this.showMagnifier = false;
-    }
+    },
+
+    // 等待图片加载完成
+    waitForImageLoad() {
+      const img = this.$refs.mainImage?.querySelector('img');
+      if (img) {
+        if (img.complete) {
+          console.log('图片已经加载完成');
+          this.onImageLoaded()
+        } else {
+          // 监听图片加载事件，load 事件是确保资源可用后再进行操作的关键机制。
+          console.log('complete未完成');
+          img.addEventListener('load', this.onImageLoaded);
+          // 设置超时，避免图片加载失败
+          setTimeout (() => {
+            if (!this.imgLoaded) {
+              console.warn('图片加载超时，使用备用方案');
+              this.onImageLoaded();
+              img.removeEventListener('load', this.onImageLoaded);
+            }
+            
+          }, 3000); // 超时移除监听，防止内存泄漏
+        }
+      } else {
+        console.log('如果找不到图片，延迟初始化')
+        setTimeout(() => {
+          this.waitForImageLoad();
+        }, 100);
+      }
+    },
+    onImageLoaded() {
+      console.log('图片加载完成，开始初始化');
+      this.imgLoaded = true;
+
+      // 确保 DOM 更新完成
+      this.$nextTick(() => {
+        this.initContainerSize();
+      });
+    },
   },
 }
 
@@ -295,8 +457,8 @@ background-position = -bgMoveX = -520px -->
 
 <style scoped>
 .area-mark {
-  width: 442px;
-  height: 442px;
+  width: 297px;
+  height: 297px;
   background-color: rgba(255, 245, 247, 0.6);
   position: absolute;
   border-radius: 16px;
