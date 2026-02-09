@@ -2,7 +2,7 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-27 21:50:38
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-02-04 20:46:18
+ * @LastEditTime: 2026-02-09 19:00:24
  * @FilePath: \app\src\detailedPage\pages\GalleryPreview.vue
  * @Description: 优化放大镜初始化、标记框跟随鼠标判断逻辑，全面提升组件性能
  * 
@@ -12,48 +12,29 @@
   <div class="main-image">
     <div class="_gallery_1azii_1">
       <div class="image-carousel vertical thumbnails">
+        <div class="image-carouse-prev" :style="CarouselContent.Y >= 0 ? 'display: none' : 'display: block;'" @click="handlePrev">
+          <div class="image-carouse-prev-arrow"></div>
+        </div>
         <div class="image-carousel-content">
           <div class="image-carousel-track vertical"
-            style="transform: translateY(0px); transition: transform 0.3s ease-in-out;">
-            <div class="item ">
+            :style="imageCarouselContent">
+            <div v-for="(item, index) in carouselData.images" :key="index"
+             ref="itemImg" @mouseenter="changeMainImage(index)" :class="{ current: thisIndex === index}"  class="item ">
               <img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/382110/3/17023/22145/695f5cd1F35315d8f/84b6bd84db198e02.jpg.avif">
-              <img class="thumbnails-play-icon"
-                src="https://img12.360buyimg.com/imagetools/jfs/t1/268427/6/7334/5868/677778bfFdfcd1873/09c35cebfaf51498.png">
+                :src="item">
+              <img v-if=" index === 0"
+                class="thumbnails-play-icon"
+                :src="carouselData.playIcon">
             </div>
-            <div class="item current"><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/382110/3/17023/22145/695f5cd1F35315d8f/84b6bd84db198e02.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/384260/8/16073/94122/696613d4F16e0e29d/b4483b5af080d7ea.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/341831/14/26350/33189/69131b57Ff6bb1825/3da0a0eb9f693eb6.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/385211/32/1327/121983/69555800Ffb2c0040/16e65c0322df60ca.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/354586/1/10557/45480/69131b58F64a74399/7ba5102f7c2a631a.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/242430/4/35199/146708/69131b5cFb925cc95/4029ad3005ea13ec.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/345395/1/25550/55113/69131b5bFc9b981e0/f365c7be423ed7d2.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/344726/34/27417/106348/69131b5aF77879590/7b13ccb54e9550fa.jpg.avif">
-            </div>
-            <div class="item "><img class="image"
-                src="https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/348881/33/25654/81991/69131b59Fcf2d5333/d97fa7fc61d4893d.jpg.avif">
-            </div>
-            <div class="item ">
+            <div class="item " @mouseenter="controlLastEl()" :class="{ current: thisIndex === totalThumbItems }">
               <div class="parameter">
                 <div class="icon"></div><span class="text">规格参数</span>
               </div>
             </div>
           </div>
+        </div>
+        <div class="image-carouse-next" :style=" CarouselContent.Y <= maxScrollY ? 'display: none;': 'display: block;'" @click="handleNext">
+          <div class="image-carouse-next-arrow"></div>
         </div>
       </div>
 
@@ -109,6 +90,30 @@ export default {
       containerSizeInitialized: false,
       imgLoaded: false, // 添加图片加载状态
       isComponentDestroyed: false,
+
+      // 右图片轮播相关数据
+      CarouselContent: {
+        Y: 0,
+      },
+      totalThumbItems: 0,
+      thisIndex: 0,
+
+      carouselData: {
+        playIcon: 'https://img12.360buyimg.com/imagetools/jfs/t1/268427/6/7334/5868/677778bfFdfcd1873/09c35cebfaf51498.png',
+        images: [
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/382110/3/17023/22145/695f5cd1F35315d8f/84b6bd84db198e02.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/382110/3/17023/22145/695f5cd1F35315d8f/84b6bd84db198e02.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/384260/8/16073/94122/696613d4F16e0e29d/b4483b5af080d7ea.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/341831/14/26350/33189/69131b57Ff6bb1825/3da0a0eb9f693eb6.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/385211/32/1327/121983/69555800Ffb2c0040/16e65c0322df60ca.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/354586/1/10557/45480/69131b58F64a74399/7ba5102f7c2a631a.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/242430/4/35199/146708/69131b5cFb925cc95/4029ad3005ea13ec.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/345395/1/25550/55113/69131b5bFc9b981e0/f365c7be423ed7d2.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/344726/34/27417/106348/69131b5aF77879590/7b13ccb54e9550fa.jpg.avif',
+          'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/348881/33/25654/81991/69131b59Fcf2d5333/d97fa7fc61d4893d.jpg.avif',
+        ]
+        
+      }
     };
   },
   computed: {
@@ -144,7 +149,33 @@ export default {
         // boxSizing: 'border-box',
         // pointerEvents: 'none' // 防止遮挡鼠标事件
       };
-    }
+    },
+    imageCarouselContent() {
+      return{
+        transform: `translateY( ${this.CarouselContent.Y}px)`,
+        transition: 'transform 0.3s ease-in-out',
+      }
+    },
+    // 计算缩略图总个数
+    totalItems() {
+      return this.carouselData.images.length + 1;
+    },
+    // 计算最大滚动距离
+    maxScrollY() {
+      // 每个项目高度：114px + 7px margin-bottom = 121px
+      const itemHeight = 121;
+      // 容器可见高度：720px（总高度） - 48px（上下箭头高度）= 672px
+      const visibleHeight = 720;
+      /*XXX 容器可见高度大小决定第一页显示的高度，过大会与第二页可见高度重叠导致压缩第二页显示的高度，将第二页内容推出减小最大滚动距离 
+       反之会压缩第一页可见高度,实际使用第一页正常显示但会增大最大滚动高度 */
+      // 总内容高度
+      const totalContentHeight = this.totalThumbItems * itemHeight - 7;//
+      // 最大滚动距离（负数，因为向下滚动是负值）
+      const maxScroll = -(totalContentHeight - visibleHeight);
+
+      // 如果内容高度小于可见高度，不需要滚动，返回0
+      return maxScroll < 0 ? maxScroll : 0;
+    },
   },
   mounted() {
     /* 在mounted钩子中，图片容器宽高都为0，这说明图片还没有加载完成 需要异步加载优化 */
@@ -173,6 +204,8 @@ export default {
     window.addEventListener('resize', this.debouncedResize); */
     window.addEventListener('resize', this.initContainerSize);
     // window.addEventListener('resize', this.initMarkSize);
+    // 初始化总项目数
+    this.totalThumbItems = this.totalItems
   },
   beforeUnmount() {
     this.isComponentDestroyed = true;
@@ -180,7 +213,38 @@ export default {
     // window.removeEventListener('resize', this.debouncedResize);
     //   window.removeEventListener('resize', this.initMarkSize);
   },
-  methods: {
+  methods: { 
+    controlLastEl() {
+      this.thisIndex = this.totalThumbItems
+    },     
+    // 获取高清大图
+    getHighResolutionImage(index) {
+      return this.carouselData.images[index].replace('/s228x228_', '/s1440x1440_');
+    },
+    // 鼠标进入切换主图
+    changeMainImage(index) {
+      this.thisIndex = index,
+      this.currentImage = this.getHighResolutionImage(index)
+    },
+    
+    // 轮播图点击位移(90为提出下外边距高度，元素高度114-上/下标签高度24)
+    handlePrev() {
+      if ( this.CarouselContent.Y < 0) {
+        this.CarouselContent.Y += 605;
+      }
+      if ( this.CarouselContent.Y >= 0) {
+        this.CarouselContent.Y = 0;
+      }
+    },
+    handleNext() {
+      if ( this.CarouselContent.Y > this.maxScrollY) {
+        this.CarouselContent.Y -= 605;
+      }
+      if ( this.CarouselContent.Y < this.maxScrollY) {
+        this.CarouselContent.Y = this.maxScrollY
+      }
+    },
+
     // 使用防抖函数
     /* debounce(func, wait) {
       let timeout;
@@ -200,7 +264,7 @@ export default {
       const container = this.$refs.mainImage;
       if (container) {
         const rect = container.getBoundingClientRect()
-        console.log('rect', rect);
+        // console.log('rect', rect);
         //获取元素相对于视口的位置和尺寸信息
         // 只有在尺寸发生变化时才更新，避免不必要的渲染
         if (rect.width !== this.containerRect.width || rect.height !== this.containerRect.height) {
@@ -310,73 +374,73 @@ export default {
         return;
       }
       // 使用 requestAnimationFrame 优化性能
-        const container = e.currentTarget;
-        const rect = container.getBoundingClientRect();
-        // 计算鼠标在图片内的相对位置
-        /* event.clientX // 鼠标相对于浏览器视口的X坐标
-          event.clientY // 鼠标相对于浏览器视口的Y坐标
-          event.pageX   // 鼠标相对于文档的X坐标（包含滚动）
-          event.pageY   // 鼠标相对于文档的Y坐标（包含滚动）
-          event.offsetX // 鼠标相对于事件源元素的X坐标
-          event.offsetY // 鼠标相对于事件源元素的Y坐标 */
-        let mouseX = e.clientX - rect.left;
-        let mouseY = e.clientY - rect.top;
+      const container = e.currentTarget;
+      const rect = container.getBoundingClientRect();
+      // 计算鼠标在图片内的相对位置
+      /* event.clientX // 鼠标相对于浏览器视口的X坐标
+        event.clientY // 鼠标相对于浏览器视口的Y坐标
+        event.pageX   // 鼠标相对于文档的X坐标（包含滚动）
+        event.pageY   // 鼠标相对于文档的Y坐标（包含滚动）
+        event.offsetX // 鼠标相对于事件源元素的X坐标
+        event.offsetY // 鼠标相对于事件源元素的Y坐标 */
+      let mouseX = e.clientX - rect.left;
+      let mouseY = e.clientY - rect.top;
 
-        // 边界检查
-        mouseX = Math.max(0, Math.min(mouseX, rect.width));
-        mouseY = Math.max(0, Math.min(mouseY, rect.height));
+      // 边界检查
+      mouseX = Math.max(0, Math.min(mouseX, rect.width));
+      mouseY = Math.max(0, Math.min(mouseY, rect.height));
 
-        // let markX = Math.max(0, Math.min(mouseX, rect.width));
-        // let markY = Math.max(0, Math.min(mouseY, rect.height));
-        // const centerX = markX - this.markRect.width / 2;
-        // const centerY = markY - this.markRect.height / 2;
-        // 计算标记框位置
-        const { x: centerX, y: centerY } = this.markPosition(mouseX, mouseY, rect);
+      // let markX = Math.max(0, Math.min(mouseX, rect.width));
+      // let markY = Math.max(0, Math.min(mouseY, rect.height));
+      // const centerX = markX - this.markRect.width / 2;
+      // const centerY = markY - this.markRect.height / 2;
+      // 计算标记框位置
+      const { x: centerX, y: centerY } = this.markPosition(mouseX, mouseY, rect);
 
-        // 只有位置发生变化时才更新
-        if (centerX !== this.markfierpos.x || centerY !== this.markfierpos.y) {this.markfierpos = { x: centerX, y: centerY };}
-        /* 从内向外解释
-            Math.min(mouseX, rect.width 取mouseX和rect.width中较小的值，防止超出右边界
-              mouseX > rect.width 时，取 rect.width
-              mouseX <= rect.width 时，取 mouseX
-            Math.max(0, ...) 取上一步结果和0中较大的值，防止超出左边界
-              如果上一步结果 < 0 时，取0
-              如果上一步结果 >= 0 时，取上一步结果
-          mouseX 被限制在 [0, rect.width] 范围内
-        */
+      // 只有位置发生变化时才更新
+      if (centerX !== this.markfierpos.x || centerY !== this.markfierpos.y) { this.markfierpos = { x: centerX, y: centerY }; }
+      /* 从内向外解释
+          Math.min(mouseX, rect.width 取mouseX和rect.width中较小的值，防止超出右边界
+            mouseX > rect.width 时，取 rect.width
+            mouseX <= rect.width 时，取 mouseX
+          Math.max(0, ...) 取上一步结果和0中较大的值，防止超出左边界
+            如果上一步结果 < 0 时，取0
+            如果上一步结果 >= 0 时，取上一步结果
+        mouseX 被限制在 [0, rect.width] 范围内
+      */
 
-        // 转换为百分比(0-1)
-        // const XPercent = mouseX / rect.width;
-        // const YPercent = mouseY / rect.height;
-        /* 百分比与容器尺寸无关，是相对值
-           便于在不同尺寸的容器中复用逻辑
-           便于计算放大后的位置 */
+      // 转换为百分比(0-1)
+      // const XPercent = mouseX / rect.width;
+      // const YPercent = mouseY / rect.height;
+      /* 百分比与容器尺寸无关，是相对值
+         便于在不同尺寸的容器中复用逻辑
+         便于计算放大后的位置 */
 
-        // 计算背景图移动位置
-        // const bgX = -(XPercent * rect.width * this.scale - this.previewWidth / 2);
-        // const bgY = -(YPercent * rect.height * this.scale - this.previewHeight / 2);
-        
-        // 计算放大镜背景位置
-        // 优化：预计算常用值
-        const invRectWidth = 1 / rect.width;
-        const invRectHeight = 1 / rect.height;
-        const scaledWidth = rect.width * this.scale;
-        const scaledHeight = rect.height * this.scale;
-        const halfPreviewWidth = this.previewWidth / 2;
-        const halfPreviewHeight = this.previewHeight / 2;
+      // 计算背景图移动位置
+      // const bgX = -(XPercent * rect.width * this.scale - this.previewWidth / 2);
+      // const bgY = -(YPercent * rect.height * this.scale - this.previewHeight / 2);
 
-        const XPercent = mouseX * invRectWidth;
-        const YPercent = mouseY * invRectHeight;
-         
-        const bgX = -(XPercent * scaledWidth - halfPreviewWidth);
-        const bgY = -(YPercent * scaledHeight - halfPreviewHeight);
+      // 计算放大镜背景位置
+      // 优化：预计算常用值
+      const invRectWidth = 1 / rect.width;
+      const invRectHeight = 1 / rect.height;
+      const scaledWidth = rect.width * this.scale;
+      const scaledHeight = rect.height * this.scale;
+      const halfPreviewWidth = this.previewWidth / 2;
+      const halfPreviewHeight = this.previewHeight / 2;
 
-        // 只有位置发生变化时才更新
-        if (bgX !== this.magnifierpos.x || bgY !== this.magnifierpos.y) {
-          this.magnifierpos = { x: bgX, y: bgY };
-        }
+      const XPercent = mouseX * invRectWidth;
+      const YPercent = mouseY * invRectHeight;
 
-        // this.magnifierpos = { x: bgX, y: bgY };
+      const bgX = -(XPercent * scaledWidth - halfPreviewWidth);
+      const bgY = -(YPercent * scaledHeight - halfPreviewHeight);
+
+      // 只有位置发生变化时才更新
+      if (bgX !== this.magnifierpos.x || bgY !== this.magnifierpos.y) {
+        this.magnifierpos = { x: bgX, y: bgY };
+      }
+
+      // this.magnifierpos = { x: bgX, y: bgY };
     },
     handleMouseenter() {
       this.showMagnifier = true;
@@ -386,7 +450,7 @@ export default {
         requestAnimationFrame(() => {
           // this.initMarkSize();
         });
-      } */ 
+      } */
     },
     handleMouseleave() {
       this.showMagnifier = false;
@@ -397,20 +461,20 @@ export default {
       const img = this.$refs.mainImage?.querySelector('img');
       if (img) {
         if (img.complete) {
-          console.log('图片已经加载完成');
+          // console.log('图片已经加载完成');
           this.onImageLoaded()
         } else {
           // 监听图片加载事件，load 事件是确保资源可用后再进行操作的关键机制。
           console.log('complete未完成');
           img.addEventListener('load', this.onImageLoaded);
           // 设置超时，避免图片加载失败
-          setTimeout (() => {
+          setTimeout(() => {
             if (!this.imgLoaded) {
               console.warn('图片加载超时，使用备用方案');
               this.onImageLoaded();
               img.removeEventListener('load', this.onImageLoaded);
             }
-            
+
           }, 3000); // 超时移除监听，防止内存泄漏
         }
       } else {
@@ -421,7 +485,7 @@ export default {
       }
     },
     onImageLoaded() {
-      console.log('图片加载完成，开始初始化');
+      // console.log('图片加载完成，开始初始化');
       this.imgLoaded = true;
 
       // 确保 DOM 更新完成
@@ -456,6 +520,71 @@ bgMoveX = mouseX * scale - previewWidth/2
 background-position = -bgMoveX = -520px -->
 
 <style scoped>
+
+.current{
+    border: 1px solid #ff0f23 !important;
+}
+
+._gallery_1azii_1 .thumbnails .thumbnails-play-icon {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+._gallery_1azii_1 .thumbnails .image-carouse-prev-arrow:after,
+._gallery_1azii_1 .thumbnails .image-carouse-next-arrow:after {
+  content: " ";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+
+._gallery_1azii_1 .thumbnails .image-carouse-next-arrow:after {
+  content: " ";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: url(https://img14.360buyimg.com/imagetools/jfs/t1/260409/1/4004/517/676e4b5aF4164c995/296d825f3f929a6a.png) left top / 100% 100% no-repeat;
+}
+
+._gallery_1azii_1 .thumbnails .image-carouse-prev-arrow:after {
+  content: " ";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: url(https://img13.360buyimg.com/imagetools/jfs/t1/261254/24/4000/566/676e4bc1F503ba8a9/6d1a84d14e57f629.png) left top / 100% 100% no-repeat;
+}
+
+.image-carousel.vertical .image-carouse-next-arrow {
+  bottom: 0;
+  left: 0;
+}
+
+.image-carousel.vertical .image-carouse-prev-arrow {
+  left: 0;
+  top: 0;
+}
+
+._gallery_1azii_1 .thumbnails .image-carouse-prev-arrow, 
+._gallery_1azii_1 .thumbnails .image-carouse-next-arrow {
+  width: 100%;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, .06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+  background: #fff;
+}
+
 .area-mark {
   width: 297px;
   height: 297px;
@@ -463,6 +592,8 @@ background-position = -bgMoveX = -520px -->
   position: absolute;
   border-radius: 16px;
   pointer-events: none;
+  top: 0;
+  left: 0;
 }
 
 .mainImg-preview .preview-image {
@@ -535,6 +666,40 @@ background-position = -bgMoveX = -520px -->
   border-radius: 8px;
   /* overflow: hidden; */
   position: relative;
+}
+
+._gallery_1azii_1 .thumbnails .parameter .text {
+  color: #828794;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+._gallery_1azii_1 .thumbnails .current .parameter .text {
+  color: #e53029;
+}
+
+._gallery_1azii_1 .thumbnails .parameter .icon {
+  width: 32px;
+  height: 32px;
+  background: url(https://img12.360buyimg.com/imagetools/jfs/t1/302010/31/25201/1205/68ff1bdaF89d88587/7edca9c66fcb526d.png) left top / 100% 100% no-repeat;
+}
+
+._gallery_1azii_1 .thumbnails .current .parameter .icon {
+  background: url(https://img12.360buyimg.com/imagetools/jfs/t1/332700/32/26261/1161/68f87bcfF60167482/c6cb6016424fc171.png) left top / 100% 100% no-repeat;
+}
+
+._gallery_1azii_1 .thumbnails .parameter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+._gallery_1azii_1 .thumbnails .current .parameter {
+  background: linear-gradient( 0deg, rgba(255, 240, 244, .3), rgba(255, 240, 244, .3)),
+  linear-gradient(0deg, #fff, #fff);
 }
 
 ._gallery_1azii_1 .thumbnails .item {
