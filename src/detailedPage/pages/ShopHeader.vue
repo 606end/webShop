@@ -2,7 +2,7 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-27 22:24:47
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-30 19:41:54
+ * @LastEditTime: 2026-02-10 18:44:42
  * @FilePath: \app\src\detailedPage\pages\ShopHeader.vue
  * @Description: 
  * 
@@ -915,7 +915,7 @@ export default {
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
   transition: height .3s;
-  z-index: 2;
+  z-index: 3;
   border-radius: 8px;
   transition: height .3s linear;
   display: flex;

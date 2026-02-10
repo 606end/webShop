@@ -2,9 +2,9 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-27 21:50:38
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-02-09 19:00:24
+ * @LastEditTime: 2026-02-10 18:40:14
  * @FilePath: \app\src\detailedPage\pages\GalleryPreview.vue
- * @Description: 优化放大镜初始化、标记框跟随鼠标判断逻辑，全面提升组件性能
+ * @Description: 新增鼠标进入轮播图移动实现滚动效果，修复点击滚动箭头异常问题
  * 
  * Copyright (c) 2026 by Sea.H.J,, All Rights Reserved. 
 -->
@@ -19,7 +19,7 @@
           <div class="image-carousel-track vertical"
             :style="imageCarouselContent">
             <div v-for="(item, index) in carouselData.images" :key="index"
-             ref="itemImg" @mouseenter="changeMainImage(index)" :class="{ current: thisIndex === index}"  class="item ">
+             ref="itemImg" @mousemove="onThumbnailHover(index)" :class="{ current: thisIndex === index}"  class="item ">
               <img class="image"
                 :src="item">
               <img v-if=" index === 0"
@@ -97,6 +97,8 @@ export default {
       },
       totalThumbItems: 0,
       thisIndex: 0,
+      hoverTimer: null,
+      lastHoverIndex: -1,
 
       carouselData: {
         playIcon: 'https://img12.360buyimg.com/imagetools/jfs/t1/268427/6/7334/5868/677778bfFdfcd1873/09c35cebfaf51498.png',
@@ -214,6 +216,35 @@ export default {
     //   window.removeEventListener('resize', this.initMarkSize);
   },
   methods: { 
+    onThumbnailHover(index) {
+      // 防抖，避免频繁触发
+      if (this.hoverTimer) {
+        clearTimeout(this.hoverTimer);
+      }
+
+      // 避免重复触发相同索引
+      if (this.lastHoverIndex === index) {
+        return;
+      }
+
+      this.hoverTimer = setTimeout(() => {
+        this.changeMainImage(index);
+        this.lastHoverIndex = index;
+      }, 50); // 50ms延迟
+    },
+    // 自动滚动到选中的缩略图
+    scrollToSelectedThumb(index) {
+      console.log('scrollToSelectedThumb触发，index:', index);
+      const itemHeight = 121;
+      const visibleHeight = 720;
+      const visibleItems = Math.floor(visibleHeight / itemHeight);
+      console.log('visibleItems', visibleItems)
+      // 计算需要滚动到的位置
+      const targetY = -Math.max(0, (index - 1) * itemHeight - visibleItems / 2 * itemHeight);
+
+      // 限制滚动范围
+      this.CarouselContent.Y = Math.max(this.maxScrollY, Math.min(0, targetY));
+    },
     controlLastEl() {
       this.thisIndex = this.totalThumbItems
     },     
@@ -223,8 +254,10 @@ export default {
     },
     // 鼠标进入切换主图
     changeMainImage(index) {
+      console.log('changeMainImage触发，index:', index);
       this.thisIndex = index,
       this.currentImage = this.getHighResolutionImage(index)
+      this.scrollToSelectedThumb(index)
     },
     
     // 轮播图点击位移(90为提出下外边距高度，元素高度114-上/下标签高度24)
@@ -237,11 +270,14 @@ export default {
       }
     },
     handleNext() {
+      console.log('handleNext触发，当前Y:', this.CarouselContent.Y, 'maxScrollY:', this.maxScrollY);
       if ( this.CarouselContent.Y > this.maxScrollY) {
         this.CarouselContent.Y -= 605;
+        console.log('滚动605后Y:', this.CarouselContent.Y);
       }
       if ( this.CarouselContent.Y < this.maxScrollY) {
-        this.CarouselContent.Y = this.maxScrollY
+        this.CarouselContent.Y = this.maxScrollY;
+        console.log('调整到maxScrollY:', this.CarouselContent.Y);
       }
     },
 
