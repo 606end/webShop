@@ -2,7 +2,7 @@
  * @Author: 606end 90855326+606end@users.noreply.github.com
  * @Date: 2026-01-27 21:50:38
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-02-10 18:40:14
+ * @LastEditTime: 2026-02-13 22:09:28
  * @FilePath: \app\src\detailedPage\pages\GalleryPreview.vue
  * @Description: 新增鼠标进入轮播图移动实现滚动效果，修复点击滚动箭头异常问题
  * 
@@ -12,35 +12,34 @@
   <div class="main-image">
     <div class="_gallery_1azii_1">
       <div class="image-carousel vertical thumbnails">
-        <div class="image-carouse-prev" :style="CarouselContent.Y >= 0 ? 'display: none' : 'display: block;'" @click="handlePrev">
+        <div class="image-carouse-prev" :style="CarouselContent.Y >= 0 ? 'display: none' : 'display: block;'"
+          @click="handlePrev">
           <div class="image-carouse-prev-arrow"></div>
         </div>
         <div class="image-carousel-content">
-          <div class="image-carousel-track vertical"
-            :style="imageCarouselContent">
-            <div v-for="(item, index) in carouselData.images" :key="index"
-             ref="itemImg" @mousemove="onThumbnailHover(index)" :class="{ current: thisIndex === index}"  class="item ">
-              <img class="image"
-                :src="item">
-              <img v-if=" index === 0"
-                class="thumbnails-play-icon"
-                :src="carouselData.playIcon">
+          <div class="image-carousel-track vertical" :style="imageCarouselContent">
+            <div v-for="(item, index) in carouselData.images" :key="index" ref="itemImg"
+              @mousemove="onThumbnailHover(index)" :class="{ current: thisIndex === index }" class="item ">
+              <img class="image" :src="item">
+              <img v-if="index === 0" class="thumbnails-play-icon" :src="carouselData.playIcon">
             </div>
-            <div class="item " @mouseenter="controlLastEl()" :class="{ current: thisIndex === totalThumbItems }">
+            <div class="item " @mouseenter="controlLastEl()" 
+            :class="{ current: thisIndex === totalThumbItems }">
               <div class="parameter">
                 <div class="icon"></div><span class="text">规格参数</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="image-carouse-next" :style=" CarouselContent.Y <= maxScrollY ? 'display: none;': 'display: block;'" @click="handleNext">
+        <div class="image-carouse-next" :style="CarouselContent.Y <= maxScrollY ? 'display: none;' : 'display: block;'"
+          @click="handleNext">
           <div class="image-carouse-next-arrow"></div>
         </div>
       </div>
 
       <div class="stage" id="spec-n1">
         <div class="centre">
-          <div class="image-area">
+          <div class="image-area" :style="imageAreaStyle">
             <div class="image-zoom-container main-img" @mousemove="handleMousemove" @mouseenter="handleMouseenter"
               @mouseleave="handleMouseleave" ref="mainImage">
               <img class="zoom-img" id="spec-img" :src="currentImage">
@@ -49,11 +48,51 @@
               <div class="area-mark" ref="area-mark" :style="areaMark"></div>
             </div>
           </div>
+          <div class="attribute" :style="attributeStyle">
+            <div class="list">
+              <template v-for="(item, index) in ItemParameters" >
+              <div class="item" :key="index">
+                <div class="label">
+                  <div class="text" :title="item.key">{{ item.key }}</div>
+                </div>
+
+                <template v-if="item.valueType === 'boolean'">
+                  <div class="value" :title="item.value">
+                    <div class="text">{{ item.value ? '是' : '否' }}</div>
+                  </div>
+                </template>
+
+                <template v-else-if="typeof( item.value) === 'object' && item.value !== null">
+                  <div class="value" :title="item.value" v-if=" item.key === '产品尺寸'">
+                    <div class="text">长{{ item.value.length }}{{ item.value.unit }} 宽{{ item.value.width }}{{
+                      item.value.unit }} 高{{ item.value.height }}{{ item.unit }}</div>
+                  </div> 
+                </template>
+
+                <template v-else>
+
+                  <div class="value" :title="item.value">
+                    <a v-if="item.key === '品牌'"
+                      :href="item.storeadd" class="text hover-red"
+                      target="_blank">{{ item.value }}</a>
+                    <div class="text" v-else>{{ item.value }}
+                      <span v-if="item.unit">{{ item.unit }}</span>
+                    </div>
+                  </div>
+                </template>
+              </div>
+              </template>
+            </div>
+            <div class="btns" @click="scrollToParameter">
+              <div class="item"><span class="text">查看全部参数</span><img class="arrow"
+                  src="https://img13.360buyimg.com/imagetools/jfs/t1/268329/4/5140/307/67713025F1b4d312d/d607de0c281b0358.png">
+              </div>
+            </div>
+          </div>
 
           <div class="mainImg-preview" v-show="showMagnifier">
             <div class="preview-image" :style="previewStyle"></div>
           </div>
-          <div class="attribute"></div>
         </div>
       </div>
     </div>
@@ -100,6 +139,9 @@ export default {
       hoverTimer: null,
       lastHoverIndex: -1,
 
+      // 控制图片、参数显示隐藏
+      displayMode: 'image',
+
       carouselData: {
         playIcon: 'https://img12.360buyimg.com/imagetools/jfs/t1/268427/6/7334/5868/677778bfFdfcd1873/09c35cebfaf51498.png',
         images: [
@@ -114,11 +156,35 @@ export default {
           'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/344726/34/27417/106348/69131b5aF77879590/7b13ccb54e9550fa.jpg.avif',
           'https://img10.360buyimg.com/pcpubliccms/s228x228_jfs/t1/348881/33/25654/81991/69131b59Fcf2d5333/d97fa7fc61d4893d.jpg.avif',
         ]
-        
-      }
+      },
+      ItemParameters:
+        [
+          { key: "品牌", value: "飞利浦（PHILIPS）", storeadd: "//list.jd.com/list.html?cat=737,13297,13690&amp;ev=exbrand_6742" },
+          { key: "商品编号", value: "100037591427" },
+          { key: "货号", value: "AWH1028/93(85HB)" },
+          { key: "CCC强制性认证", value: true, valueType: "boolean" },
+          { key: "内胆材质", value: "无内胆" },
+          { key: "加热功率", value: "8500", unit: "W" },
+          { key: "产品尺寸", value: { length: 230, width: 47, height: 440 }, unit: "mm" },
+          { key: "防水等级", value: "IPX4" },
+          { key: "电压/频率", value: "220V/50Hz" },
+          { key: "操控方式", value: "触控式" },
+          { key: "外观设计", value: "方型" },
+          { key: "容量", value: "100-150", unit: "L" }
+        ]
     };
   },
   computed: {
+    imageAreaStyle() {
+      return {
+        display: this.displayMode === 'image' ? 'flex' : 'none'
+      }
+    },
+    attributeStyle() {
+      return {
+        display: this.displayMode === 'parameter' ? 'flex' : 'none'
+      }
+    },
     previewStyle() {
       if (!this.containerSizeInitialized) {
         return {};
@@ -153,7 +219,7 @@ export default {
       };
     },
     imageCarouselContent() {
-      return{
+      return {
         transform: `translateY( ${this.CarouselContent.Y}px)`,
         transition: 'transform 0.3s ease-in-out',
       }
@@ -176,7 +242,7 @@ export default {
       const maxScroll = -(totalContentHeight - visibleHeight);
 
       // 如果内容高度小于可见高度，不需要滚动，返回0
-      return maxScroll < 0 ? maxScroll : 0;
+        return maxScroll < 0 ? maxScroll : 0;
     },
   },
   mounted() {
@@ -215,22 +281,44 @@ export default {
     // window.removeEventListener('resize', this.debouncedResize);
     //   window.removeEventListener('resize', this.initMarkSize);
   },
-  methods: { 
-    onThumbnailHover(index) {
-      // 防抖，避免频繁触发
-      if (this.hoverTimer) {
-        clearTimeout(this.hoverTimer);
+  methods: {
+    scrollToParameter() {
+      const element = document.getElementById('sx-product-detail')
+      console.log('element', element)
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',  // 平滑滚动
+          block: 'start'       // 对齐到顶部
+        });
       }
+    },
+    onThumbnailHover(index) {
+      if (this.displayMode != 'image') {
+        this.displayMode = 'image'
+      }        
+      // 防抖，避免频繁触发
+      // if (this.hoverTimer) {
+      //   clearTimeout(this.hoverTimer);
+      // }
 
       // 避免重复触发相同索引
       if (this.lastHoverIndex === index) {
+        this.thisIndex = index
         return;
       }
+      // this.hoverTimer = setTimeout(() => {
+      //   this.changeMainImage(index);
+      //   this.lastHoverIndex = index;
+      // }, 30); // 30ms延迟
+      // 使用微任务处理图片加载
+      this.$nextTick(() => {
+        this.currentImage = this.getHighResolutionImage(index);
+      });
 
-      this.hoverTimer = setTimeout(() => {
-        this.changeMainImage(index);
-        this.lastHoverIndex = index;
-      }, 50); // 50ms延迟
+      // 处理滚动
+      this.scrollToSelectedThumb(index);
+      this.lastHoverIndex = index;
+    
     },
     // 自动滚动到选中的缩略图
     scrollToSelectedThumb(index) {
@@ -246,36 +334,37 @@ export default {
       this.CarouselContent.Y = Math.max(this.maxScrollY, Math.min(0, targetY));
     },
     controlLastEl() {
+      this.displayMode = 'parameter'
       this.thisIndex = this.totalThumbItems
-    },     
+    },
     // 获取高清大图
     getHighResolutionImage(index) {
       return this.carouselData.images[index].replace('/s228x228_', '/s1440x1440_');
     },
     // 鼠标进入切换主图
-    changeMainImage(index) {
-      console.log('changeMainImage触发，index:', index);
-      this.thisIndex = index,
-      this.currentImage = this.getHighResolutionImage(index)
-      this.scrollToSelectedThumb(index)
-    },
-    
+    // changeMainImage(index) {
+    //   this.thisIndex = index,
+    //   console.log('changeMainImage触发，index:', index);
+    //   this.currentImage = this.getHighResolutionImage(index)
+    //   this.scrollToSelectedThumb(index)
+    // },
+
     // 轮播图点击位移(90为提出下外边距高度，元素高度114-上/下标签高度24)
     handlePrev() {
-      if ( this.CarouselContent.Y < 0) {
+      if (this.CarouselContent.Y < 0) {
         this.CarouselContent.Y += 605;
       }
-      if ( this.CarouselContent.Y >= 0) {
+      if (this.CarouselContent.Y >= 0) {
         this.CarouselContent.Y = 0;
       }
     },
     handleNext() {
       console.log('handleNext触发，当前Y:', this.CarouselContent.Y, 'maxScrollY:', this.maxScrollY);
-      if ( this.CarouselContent.Y > this.maxScrollY) {
+      if (this.CarouselContent.Y > this.maxScrollY) {
         this.CarouselContent.Y -= 605;
         console.log('滚动605后Y:', this.CarouselContent.Y);
       }
-      if ( this.CarouselContent.Y < this.maxScrollY) {
+      if (this.CarouselContent.Y < this.maxScrollY) {
         this.CarouselContent.Y = this.maxScrollY;
         console.log('调整到maxScrollY:', this.CarouselContent.Y);
       }
@@ -556,9 +645,97 @@ bgMoveX = mouseX * scale - previewWidth/2
 background-position = -bgMoveX = -520px -->
 
 <style scoped>
+._gallery_1azii_1 .attribute .list .value {
+  flex: 1;
+  overflow: hidden;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+}
 
-.current{
-    border: 1px solid #ff0f23 !important;
+._gallery_1azii_1 .attribute .list .label .text,
+._gallery_1azii_1 .attribute .list .value .text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+._gallery_1azii_1 .attribute .list .label {
+  width: 92px;
+  margin-right: 16px;
+  color: #3d414d;
+  display: flex;
+  align-items: center;
+}
+
+._gallery_1azii_1 .attribute .list .label .tips {
+  width: 14px;
+  height: 14px;
+  display: block;
+  cursor: pointer;
+}
+
+._gallery_1azii_1 .attribute .list>.item:nth-child(2n) {
+  padding-left: 24px;
+}
+
+._gallery_1azii_1 .attribute .list>.item:nth-child(odd) {
+  padding-right: 24px;
+}
+
+._gallery_1azii_1 .attribute .list .item {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 32px;
+  height: 22px
+}
+
+._gallery_1azii_1 .attribute .list {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  overflow: hidden;
+  align-content: baseline
+}
+
+._gallery_1azii_1 .attribute .btns .arrow {
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+}
+
+._gallery_1azii_1 .attribute .btns .item {
+  width: 300px;
+  height: 52px;
+  border-radius: 8px;
+  border: .5px solid #888b93;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+._gallery_1azii_1 .attribute .btns {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+._gallery_1azii_1 .attribute {
+  width: 100%;
+  padding: 49px 36px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.current {
+  border: 1px solid #ff0f23 !important;
 }
 
 ._gallery_1azii_1 .thumbnails .thumbnails-play-icon {
@@ -606,7 +783,7 @@ background-position = -bgMoveX = -520px -->
   top: 0;
 }
 
-._gallery_1azii_1 .thumbnails .image-carouse-prev-arrow, 
+._gallery_1azii_1 .thumbnails .image-carouse-prev-arrow,
 ._gallery_1azii_1 .thumbnails .image-carouse-next-arrow {
   width: 100%;
   height: 24px;
@@ -624,9 +801,10 @@ background-position = -bgMoveX = -520px -->
 .area-mark {
   width: 297px;
   height: 297px;
-  background-color: rgba(255, 245, 247, 0.6);
+  background-color: rgba(255, 235, 239, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   position: absolute;
-  border-radius: 16px;
+  border-radius: 8px;
   pointer-events: none;
   top: 0;
   left: 0;
@@ -683,20 +861,20 @@ background-position = -bgMoveX = -520px -->
   position: relative;
 }
 
-._gallery_lazii_1 .centre {
+._gallery_1azii_1 .centre {
   width: 100%;
   display: flex;
   min-height: 0;
   flex: 1;
   align-items: center;
+  flex-direction: column;
 }
 
 ._gallery_1azii_1 .stage {
   width: 860px;
-  height: 720px;
+  height: 722px;
   display: flex;
   justify-content: center;
-  align-items: center;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, .06);
   border-radius: 8px;
@@ -734,8 +912,8 @@ background-position = -bgMoveX = -520px -->
 }
 
 ._gallery_1azii_1 .thumbnails .current .parameter {
-  background: linear-gradient( 0deg, rgba(255, 240, 244, .3), rgba(255, 240, 244, .3)),
-  linear-gradient(0deg, #fff, #fff);
+  background: linear-gradient(0deg, rgba(255, 240, 244, .3), rgba(255, 240, 244, .3)),
+    linear-gradient(0deg, #fff, #fff);
 }
 
 ._gallery_1azii_1 .thumbnails .item {
