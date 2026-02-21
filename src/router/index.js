@@ -1,8 +1,8 @@
 /*
  * @Author: cc19530632908@163.com cc19530632908@163.com
  * @Date: 2025-11-03 16:15:39
- * @LastEditors: Sam cc19530632908@163.com
- * @LastEditTime: 2026-01-03 16:28:10
+ * @LastEditors: 606end 90855326+606end@users.noreply.github.com
+ * @LastEditTime: 2026-01-27 22:47:15
  * @FilePath: \app\src\router\index.js
  * @Description: 
  * 
@@ -20,7 +20,7 @@ import Register from '@/pages/register/register.vue';
 import Home from '@/pages/home/home.vue';
 import Search from '@/pages/search/search.vue';
 import Login from '@/pages/login/login.vue';
-import Detailed from '@/pages/detailed/detailed.vue';
+import detailed from '@/pages/detailed.vue';
 // 先把VueRouter原型对象的push先保存一份
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -87,12 +87,12 @@ export default new VueRouter({
             meta: {
                 show: false,
                 coll: true
-}
+            }
         },
         {
             path: '/detailed',
             name: 'detailedPage',
-            component: Detailed,
+            component: detailed,
             meta: {
                 show: true,
                 coll: false

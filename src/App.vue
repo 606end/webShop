@@ -2,8 +2,8 @@
  * @Author: cc19530632908@163.com cc19530632908@163.com
  * @Date: 2025-11-01 11:50:18
  * @LastEditors: 606end 90855326+606end@users.noreply.github.com
- * @LastEditTime: 2026-01-11 17:29:10
- * @FilePath: \app\src\App.vue
+ * @LastEditTime: 2026-01-26 14:58:17
+ * @FilePath: \app\src\main\App.vue
  * @Description: 
  * 
  * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import topBar from './components/header/topBar.vue';
-import footerBar from './components/footer/footerBar.vue';
+import topBar from '@/components/header/topBar.vue';
+import footerBar from '@/components/footer/footerBar.vue';
 
 export default {
   name: 'App',
